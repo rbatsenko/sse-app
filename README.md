@@ -1,4 +1,4 @@
-# Simple SSE(Server Sent Events) app
+## Simple SSE(Server Sent Events) app
 
 ### Setting up and running
 
