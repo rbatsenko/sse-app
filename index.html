@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>SSE</title>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script>
+    const app = document.getElementById('app');
+    const eventSource = new EventSource('http://localhost:3000/sse');
+
+    eventSource.onopen = () => {
+      const h1 = document.createElement('h1');
+      h1.innerText = 'Connection was opened!';
+      app.appendChild(h1);
+    }
+    
+    eventSource.onmessage = (e) => {
+      const h3 = document.createElement('h3');
+      h3.innerText = e.data;
+      app.appendChild(h3);
+    }
+
+    eventSource.onerror = () => {
+      const h1 = document.createElement('h1');
+      if (eventSource.readyState === EventSource.CONNECTING) {
+        h1.innerText = 'Connection was closed!';
+        app.appendChild(h1);
+        eventSource.close();
+      } else {
+        h1.innerText = 'An error occured!';
+        app.appendChild(h1);
+        eventSource.close();
+      }
+    }
+  </script>
+</body>
+</html>
